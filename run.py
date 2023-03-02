@@ -69,7 +69,7 @@ def get_code_from_completion_response(response: dict) -> str:
     re_res = re.findall(r"(```\n|```python\n)([\s\S]+?)```", content)
     logger.debug(re_res)
     if len(re_res) > 0:
-        code = re_res[0]
+        code = re_res[0][1]
     else:
         # Maybe the entire response is code?
         code = content
