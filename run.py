@@ -18,7 +18,7 @@ stream_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-API_KEY = ""
+API_KEY = os.environ.get("OPENAI_API_KEY")
 
 
 # @@@
