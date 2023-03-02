@@ -42,7 +42,7 @@ def get_prompt() -> str:
     with open("prompt.txt", "r") as f:
         prompt = "\n".join(f.readlines())
 
-    with open("prompt.txt", "r") as f:
+    with open("run.py", "r") as f:
         code =  "\n".join(f.readlines())
     
     return prompt + code
@@ -101,3 +101,4 @@ def run():
 if __name__ == "__main__":
     run()
     restart_program()
+    
