@@ -77,12 +77,6 @@ def get_code_from_completion_response(response: dict) -> str:
     logger.info("Extracted Code: " + code)
     return code
 
-
-# @@@
-
-# @@@
-
-
 def run():
     logger.debug("Start of run()")
     logger.debug("Reading prompt from prompt.txt")
@@ -95,10 +89,21 @@ def run():
     with open("run.py", "r") as f:
         old = f.read()
         with open("run.py", "w") as f2:
-            f2.write(old.replace(DELIMITER, DELIMITER + code + "\n", 1))
+            chunks = old.split(DELIMITER)
+            f2.write(
+                chunks[0] + 
+                chunks[1] + 
+                "\n" + 
+                code + 
+                "\n" + 
+                chunks[2]
+            )
 
-    logger.info("Finished writing to run.py")
+    logger.info("Finished updating run.py")
 
+# @@@
+
+# @@@
 
 if __name__ == "__main__":
     run()
