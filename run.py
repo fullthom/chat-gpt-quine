@@ -34,8 +34,9 @@ def create_chat_completion(prompt, model="gpt-3.5-turbo"):
     response = requests.post(url, headers=headers, json=data)
     logger.debug("End of create_chat_completion")
     if response.status_code == 200:
-        logger.debug("API Response: " + json.dumps(response))
-        return response.json()
+        res = response.json()
+        logger.debug("API Response: " + json.dumps(res))
+        return res
     else:
         msg = "Request to API failed!"
         logger.error(msg)
