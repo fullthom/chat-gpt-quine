@@ -114,9 +114,17 @@ def run():
         with open("run.py", "w") as f2:
             chunks = old.split(DELIMITER)
             if "DELETE EXISTING CODE!" in code:
-                chunks[1] = ""
-
-            f2.write(
+                f2.write(
+                    (
+                        chunks[0]
+                        + DELIMITER
+                        + "\n\n\n"
+                        + DELIMITER
+                        + chunks[2]
+                    )
+                )
+            else:
+                f2.write(
                 (
                     chunks[0]
                     + DELIMITER
@@ -132,7 +140,7 @@ def run():
 
 
 # @@@
- 
+
 # @@@
 
 
