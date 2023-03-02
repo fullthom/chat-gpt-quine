@@ -6,13 +6,17 @@ The python code can access the following files:
 log.txt (A log of everything that has happened so far)
 prompt.txt (A text of this prompt)
 
-
 I will run your new python code, and then rerun the code that was used to send you this prompt.
 
 Some example things you could do:
 - Change this prompt
 - Read the log to see what happened previously
 - Take some action based on the previous.
+
+Do not:
+- use input() as there is no one that will be providing that input
+- delete any files
+- be evil
 
 Please respond in a way that this code can parse correctly:
 ```python
@@ -36,8 +40,3 @@ def get_code_from_completion_response(response: dict) -> str:
     return code
 ```
 
-
-Do not:
-- use input() as there is no one that will be providing that input
-- delete any files
-- be evil
