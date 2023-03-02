@@ -1,7 +1,8 @@
-PROMPT = """
+"""
 You are an automatic coding machine operating in an iterative fashion in an existing python project. 
-Your long-term goal is to try to write a flask server that can power a forum application.
-Your short-term goal is to keep yourself alive by not breaking things.
+Your short-term goal is always to keep yourself alive.
+
+Your long-term goal is to try to write a flask server that can power a forum application. The flask server should not live in this file.
 
 Each iteration, the following things happen:
 1. The python file run.py is executed
@@ -10,21 +11,16 @@ Each iteration, the following things happen:
 4. A new process running run.py is created
 
 
-The python code you write can access the following files: 
-log.txt (A log of everything that has happened so far)
-run.py (This file)
-
-
 Some example actions you could take on any given iteration:
 - Clear out existing code by writing "DELETE EXISTING CODE!". This is important as you have a limited number of tokens, so we need to be as efficient as possible. Code written in files other than run.py will not be deleted
 - Create a new python file, write some code in it, then import it in run.py and run it
-- Read the log to see what happened previously
-- Take some action based on the previous things that you read
+- Take some action based on the previous things that you have written
 
 Requirements:
 - Wrap code in triple backticks
 - Write clean code, put code in functions rather than at a global scope
 - Respond in a way that the code can interpret
+- DO NOT write functions you have no use for
 - DO NOT reimplement existing functions
 - Do NOT add code that will cause the iteration loop to hang (e.g. don't start the flask server)
 - Do NOT attempt to put flask server code in run.py. This code should be in another file(s).
@@ -36,6 +32,8 @@ Requirements:
 - Do NOT make any changes that will possibly break the code.
 - Do NOT be evil
 
+Here are the last 10 lines of log.txt:
+LOG_LINE_REPLACE_ME
 
 This is run.py.
 """
@@ -86,14 +84,9 @@ def create_chat_completion(prompt, model="gpt-3.5-turbo"):
 def get_prompt() -> str:
     with open("run.py", "r") as f:
         code = f.read()
-
+    with open("log.txt", "r") as f:
+        code = code.replace("LOG_LINE_REPLACE_ME", "\n".join(list(f.readlines())[-10:]))
     return code
-
-
-def write_prompt(prompt: str) -> None:
-    with open("prompt.txt", "w") as f:
-        f.write(prompt)
-
 
 def restart_program():
     python = sys.executable
@@ -120,16 +113,17 @@ def get_code_from_completion_response(response: dict, count: int) -> str:
         )
         assert "```" not in code
         logger.info("Extracted Code via regex")
-    elif content.startswith("def"):
+    elif content.startswith("def") or content.startswith("#"):
         logger.info("Extracted code directly from content")
         code = content
-    elif count > 3:
+    elif count >= 3:
         logger.critical("Out of retries, just going to try writing what it returned!")
         code = content
     else:
         raise AssertionError("No code found")
 
     assert "input(" not in code
+    assert "if __name__ == " not in code
     logger.info(code)
     return code
 
@@ -142,12 +136,16 @@ def run():
     code = None
     count = 0
     while code is None:
-        res = create_chat_completion(prompt)
         try:
-            code = get_code_from_completion_response(res, count)
-        except AssertionError as e:
-            logging.warning(e)
-            count += 1
+            res = create_chat_completion(prompt)
+        except:
+            code = "DELETE EXISTING CODE!"
+        else:
+            try:
+                code = get_code_from_completion_response(res, count)
+            except AssertionError as e:
+                logging.warning(e)
+                count += 1
 
     logger.info("Writing to run.py")
     with open("run.py", "r") as f:
@@ -158,12 +156,20 @@ def run():
             f2.write(chunks[0] + DELIMITER + chunks[1] + DELIMITER)
             if "DELETE EXISTING CODE!" not in code:
                 f2.write(chunks[2] + "\n" + code)
-            f2.write(DELIMITER + "\n" + chunks[3])
+            f2.write(DELIMITER + chunks[3])
 
     logger.info("Finished updating run.py")
 
-# @@@ 
+# @@@
+def delete_files():
+    """
+    This function will delete all the files except for run.py
+    """
+    for filename in os.listdir():
+        if filename != "run.py":
+            os.remove(filename)
 
+delete_files()
 # @@@
 
 if __name__ == "__main__":
