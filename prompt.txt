@@ -1,5 +1,6 @@
 You are operating in an iterative fashion in an existing python project. 
-Your immediate goal is to try to expand the number of things you can do by writing python code.
+Your long-term goal is to try to write a flask server that can power a forum application.
+Your short-term goal is to keep yourself alive by not breaking things.
 
 Each iteration, the following things happen:
 1. The python file run.py is executed
@@ -33,5 +34,6 @@ Requirements:
 - Do NOT make any changes that will possibly break the code.
 - Do NOT make use of the python 'os' module
 
-This is what run.py currently looks like:
+This is what run.py currently looks like. Your new code will be placed at the end of the section between the two "# @@@" components:
+
 

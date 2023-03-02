@@ -59,11 +59,12 @@ def restart_program():
     os.execl(python, python, *sys.argv)
 
 
-def get_code_from_completion_response(response: dict) -> str:
+def get_code_from_completion_response(response: dict, count: int) -> str:
     content = response["choices"][0]["message"]["content"].strip()
     logger.debug("Full Response Content: " + content)
 
     # Extract the first code from the response
+    content = content.replace(DELIMITER, "")
     re_res = re.findall(r"(```\n|```python\n)([\s\S]+?)```", content)
     logger.debug(re_res)
 
@@ -81,9 +82,13 @@ def get_code_from_completion_response(response: dict) -> str:
     elif content.startswith("def"):
         logger.info("Extracted code directly from content")
         code = content
+    elif count > 3:
+        logger.critical("Out of retries, just going to try writing what it returned!")
+        code = content
     else:
         raise AssertionError("No code found")
-
+    
+    assert "input(" not in code
     logger.info(code)
     return code
 
@@ -94,12 +99,14 @@ def run():
     logger.debug("Using prompt: " + prompt)
     
     code = None
+    count = 0
     while code is None:
         res = create_chat_completion(prompt)
         try:
-            code = get_code_from_completion_response(res)
+            code = get_code_from_completion_response(res, count)
         except AssertionError as e:
             logging.warning(e)
+            count += 1
 
     logger.info("Writing to run.py")
     with open("run.py", "r") as f:
@@ -125,8 +132,9 @@ def run():
 
 
 # @@@
-# 
-# # @@@
+ 
+# @@@
+
 
 if __name__ == "__main__":
     run()
