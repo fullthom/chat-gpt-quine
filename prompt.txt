@@ -14,6 +14,7 @@ prompt.txt (A text of this prompt. Be careful, as you might break things if you 
 
 
 Some example actions you could take on any given iteration:
+- Clear out existing code by writing "DELETE EXISTING CODE!". This is important as you have a limited number of tokens, so we need to be as efficient as possible. Code written in files other than run.py will not be deleted
 - Create a new python file, write some code in it, then import it in run.py and run it
 - Change this prompt so your next result is different
 - Read the log to see what happened previously

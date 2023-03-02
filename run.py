@@ -5,7 +5,6 @@ import logging
 import os
 import sys
 
-
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler("log.txt")
@@ -42,13 +41,12 @@ def create_chat_completion(prompt, model="gpt-3.5-turbo"):
 
 def get_prompt() -> str:
     with open("prompt.txt", "r") as f:
-        prompt = "\n".join(f.readlines())
+        prompt = f.read()
 
     with open("run.py", "r") as f:
-        code =  "\n".join(f.readlines())
-    
-    return prompt + code
+        code = f.read()
 
+    return prompt + code
 
 
 def write_prompt(prompt: str) -> None:
@@ -73,35 +71,55 @@ def get_code_from_completion_response(response: dict) -> str:
     else:
         # Maybe the entire response is code?
         code = content
-    code = code.removeprefix("```").removeprefix("python").removesuffix("```").replace(DELIMITER, "")
+    code = (
+        code.removeprefix("```")
+        .removeprefix("python")
+        .removesuffix("```")
+        .replace(DELIMITER, "")
+    )
     logger.info("Extracted Code: " + code)
+    assert "```" not in code
     return code
+
 
 def run():
     logger.debug("Start of run()")
-    logger.debug("Reading prompt from prompt.txt")
     prompt = get_prompt()
     logger.debug("Using prompt: ")
-    res = create_chat_completion(prompt)
-    code = get_code_from_completion_response(res)
+    
+    code = None
+    while code is None:
+        res = create_chat_completion(prompt)
+        try:
+            new = get_code_from_completion_response(res)
+        except AssertionError as e:
+            logging.warning(e)
 
-    logger.info("Writing to new.py")
+    logger.info("Writing to run.py")
     with open("run.py", "r") as f:
         old = f.read()
         with open("run.py", "w") as f2:
             chunks = old.split(DELIMITER)
+            if "DELETE EXISTING CODE!" in new:
+                chunks[1] = ""
+
             f2.write(
-                chunks[0] + 
-                DELIMITER +
-                chunks[1] + 
-                "\n" + 
-                code + 
-                "\n" + 
-                DELIMITER + 
-                chunks[2]
+                (
+                    chunks[0]
+                    + DELIMITER
+                    + "\n"
+                    + chunks[1]
+                    + "\n"
+                    + new
+                    + "\n"
+                    + DELIMITER
+                    + "\n"
+                    + chunks[2]
+                )
             )
 
     logger.info("Finished updating run.py")
+
 
 # @@@
 
@@ -110,4 +128,3 @@ def run():
 if __name__ == "__main__":
     run()
     restart_program()
-    
