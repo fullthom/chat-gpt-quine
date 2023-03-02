@@ -1,2 +1,4 @@
 log.txt
 venv
+tmp
+__pycache__

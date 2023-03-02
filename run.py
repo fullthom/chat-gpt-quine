@@ -66,19 +66,25 @@ def get_code_from_completion_response(response: dict) -> str:
     # Extract the first code from the response
     re_res = re.findall(r"(```\n|```python\n)([\s\S]+?)```", content)
     logger.debug(re_res)
+
+    # TODO: we need a better way of figuring out if we can run the code
     if len(re_res) > 0:
         code = re_res[0][1]
-    else:
-        # Maybe the entire response is code?
+        code = (
+            code.removeprefix("```")
+            .removeprefix("python")
+            .removesuffix("```")
+            .replace(DELIMITER, "")
+        )
+        assert "```" not in code
+        logger.info("Extracted Code via regex")
+    elif content.startswith("def"):
+        logger.info("Extracted code directly from content")
         code = content
-    code = (
-        code.removeprefix("```")
-        .removeprefix("python")
-        .removesuffix("```")
-        .replace(DELIMITER, "")
-    )
-    logger.info("Extracted Code: " + code)
-    assert "```" not in code
+    else:
+        raise AssertionError("No code found")
+
+    logger.info(code)
     return code
 
 
@@ -119,9 +125,8 @@ def run():
 
 
 # @@@
-
-
-# @@@
+# 
+# # @@@
 
 if __name__ == "__main__":
     run()
