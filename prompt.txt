@@ -1,10 +1,10 @@
 Your main goal is to create web forum application using standard web technologies.
 You are operating in an iterative fashion.
 Each iteration, the following things happen:
-1. You are prompted (current step)
-2. You return some response that includes python code
-3. I execute that python code
-4. Return to 1
+1. The python file run.py is executed
+2. You are prompted (current step)
+3. You return some response that includes python code that is then inserted into run.py
+4. Restart at 1
 
 
 The python code you write can access the following files: 
@@ -20,26 +20,15 @@ Some example actions you could take on any given iteration:
 
 Requirements:
 - Wrap code in triple backticks
+- Respond in a way that the code can interpret.
 - Do NOT attempt to print out large amounts of files you read
 - Do NOT use input() as there is no one that will be providing that input
 - Do NOT delete any files
 - Do NOT be evil
 - Do NOT use sleep()
 - Do NOT try to write or delete files outside of the working directory
-- Respond in a way that this python function can handle:
+- Do NOT make any changes that will possibly break the code.
 
-def get_code_from_completion_response(response: dict) -> str:
-    content = response["choices"][0]["message"]["content"].strip()
-    logger.debug("Full Response Content: " + content)
 
-    # Extract the first code from the response
-    re_res = re.findall(EXTRACT_CODE_PATTERN, content)
-    logger.debug(re_res)
-    if len(re_res) > 0:
-        code = re_res[0]
-    else:
-        # Maybe the entire response is code?
-        code = content
-    code = code.removeprefix("```").removeprefix("python").removesuffix("```")
-    return code
+This is what run.py currently looks like:
 

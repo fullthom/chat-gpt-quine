@@ -21,11 +21,6 @@ logger.addHandler(stream_handler)
 API_KEY = os.environ.get("OPENAI_API_KEY")
 
 
-# @@@
-
-# @@@
-
-
 def create_chat_completion(prompt, model="gpt-3.5-turbo"):
     logger.debug("Start of create_chat_completion")
     url = "https://api.openai.com/v1/chat/completions"
@@ -43,9 +38,15 @@ def create_chat_completion(prompt, model="gpt-3.5-turbo"):
         raise Exception(msg)
 
 
-def read_prompt() -> str:
+def get_prompt() -> str:
     with open("prompt.txt", "r") as f:
-        return "\n".join(f.readlines())
+        prompt = "\n".join(f.readlines())
+
+    with open("prompt.txt", "r") as f:
+        code =  "\n".join(f.readlines())
+    
+    return prompt + code
+
 
 
 def write_prompt(prompt: str) -> None:
@@ -73,6 +74,11 @@ def get_code_from_completion_response(response: dict) -> str:
     code = code.removeprefix("```").removeprefix("python").removesuffix("```")
     logger.info("Extracted Code: " + code)
     return code
+
+
+# @@@
+
+# @@@
 
 
 def run():
