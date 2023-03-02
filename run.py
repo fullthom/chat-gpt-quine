@@ -84,7 +84,7 @@ def get_code_from_completion_response(response: dict) -> str:
 def run():
     logger.debug("Start of run()")
     logger.debug("Reading prompt from prompt.txt")
-    prompt = read_prompt()
+    prompt = get_prompt()
     logger.debug("Using prompt: ")
     res = create_chat_completion(prompt)
     code = get_code_from_completion_response(res)
