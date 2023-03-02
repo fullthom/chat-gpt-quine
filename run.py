@@ -11,7 +11,7 @@ file_handler = logging.FileHandler("log.txt")
 file_handler.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(process)d - %(funcName)s:%(lineno)d - %(message)s")
 file_handler.setFormatter(formatter)
 stream_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
@@ -83,15 +83,15 @@ def get_code_from_completion_response(response: dict) -> str:
 
 
 def run():
-    logger.debug("Start of run()")
+    logger.warning("Start of run()")
     prompt = get_prompt()
-    logger.debug("Using prompt: ")
+    logger.debug("Using prompt: " + prompt)
     
     code = None
     while code is None:
         res = create_chat_completion(prompt)
         try:
-            new = get_code_from_completion_response(res)
+            code = get_code_from_completion_response(res)
         except AssertionError as e:
             logging.warning(e)
 
@@ -100,20 +100,17 @@ def run():
         old = f.read()
         with open("run.py", "w") as f2:
             chunks = old.split(DELIMITER)
-            if "DELETE EXISTING CODE!" in new:
+            if "DELETE EXISTING CODE!" in code:
                 chunks[1] = ""
 
             f2.write(
                 (
                     chunks[0]
                     + DELIMITER
-                    + "\n"
                     + chunks[1]
-                    + "\n"
-                    + new
-                    + "\n"
+                    + "\n" 
+                    + code
                     + DELIMITER
-                    + "\n"
                     + chunks[2]
                 )
             )
@@ -122,6 +119,7 @@ def run():
 
 
 # @@@
+
 
 # @@@
 
