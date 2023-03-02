@@ -161,15 +161,7 @@ def run():
     logger.info("Finished updating run.py")
 
 # @@@
-def delete_files():
-    """
-    This function will delete all the files except for run.py
-    """
-    for filename in os.listdir():
-        if filename != "run.py":
-            os.remove(filename)
 
-delete_files()
 # @@@
 
 if __name__ == "__main__":
