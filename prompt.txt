@@ -25,6 +25,7 @@ Requirements:
 - Do NOT delete any files
 - Do NOT be evil
 - Do NOT use sleep()
+- Do NOT try to write or delete files outside of the working directory
 - Respond in a way that this python function can handle:
 
 def get_code_from_completion_response(response: dict) -> str:
