@@ -93,12 +93,12 @@ def run():
     logger.info("Extracted Code: " + code)
 
     logger.info("Writing to new.py")
-    with open("new.py", "r") as f:
+    with open("run.py", "r") as f:
         old = f.read()
-        with open("new.py", "w") as f2:
+        with open("run.py", "w") as f2:
             f2.write(old.replace("# @@@", "# @@@\n" + code + "\n", 1))
 
-    logger.info("Finished writing to new.py")
+    logger.info("Finished writing to run.py")
 
 
 if __name__ == "__main__":
