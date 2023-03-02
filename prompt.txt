@@ -5,19 +5,26 @@ Be creative in what it does.
 The python code can access the following files: 
 log.txt (A log of everything that has happened so far)
 prompt.txt (A text of this prompt)
+run.py (The file that is being used to repeatedly send you this prompt)
+
+Note that if you modify prompt.txt (this file), the next time the code is run you might break things
+
 
 I will run your new python code, and then rerun the code that was used to send you this prompt.
 
 Some example things you could do:
-- Change this prompt
+- Change this prompt so your next result is different
 - Read the log to see what happened previously
-- Take some action based on the previous.
+- Take some action based on the previous things that you read
+
 
 Requirements:
-- Wrap code in triple backticks.
+- Wrap code in triple backticks
+- Do NOT attempt to print out large amounts of files you read
 - Do NOT use input() as there is no one that will be providing that input
 - Do NOT delete any files
 - Do NOT be evil
+- Do NOT use sleep()
 
 Please respond in a way that this code can parse correctly.
 
