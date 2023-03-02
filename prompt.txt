@@ -13,30 +13,26 @@ Some example things you could do:
 - Read the log to see what happened previously
 - Take some action based on the previous.
 
-Do not:
-- use input() as there is no one that will be providing that input
-- delete any files
-- be evil
+Requirements:
+- Wrap code in triple backticks.
+- Do NOT use input() as there is no one that will be providing that input
+- Do NOT delete any files
+- Do NOT be evil
 
-Please respond in a way that this code can parse correctly:
-```python
+Please respond in a way that this code can parse correctly.
+
 def get_code_from_completion_response(response: dict) -> str:
     content = response["choices"][0]["message"]["content"].strip()
     logger.debug("Full Response Content: " + content)
 
     # Extract the first code from the response
-    code = ""
-    for match in re.finditer(EXTRACT_CODE_PATTERN, content):
-        code = match.group(1).strip()
-        logger.debug("Extracted code: " + code)
-        if code.startswith("python"):
-            code = code[6:].strip()
-        break
-
-    if not code:
-        logger.error("No code found in response")
-        raise ValueError("No code found in response")
-
+    re_res = re.findall(EXTRACT_CODE_PATTERN, content)
+    logger.debug(re_res)
+    if len(re_res) > 0:
+        code = re_res[0]
+    else:
+        # Maybe the entire response is code?
+        code = content
+    code = code.removeprefix("```").removeprefix("python").removesuffix("```")
     return code
-```
 
