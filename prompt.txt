@@ -1,0 +1,43 @@
+
+Can you write some python code that does something interesting? 
+Be creative in what it does.
+
+The python code can access the following files: 
+log.txt (A log of everything that has happened so far)
+prompt.txt (A text of this prompt)
+
+
+I will run your new python code, and then rerun the code that was used to send you this prompt.
+
+Some example things you could do:
+- Change this prompt
+- Read the log to see what happened previously
+- Take some action based on the previous.
+
+Please respond in a way that this code can parse correctly:
+```python
+def get_code_from_completion_response(response: dict) -> str:
+    content = response["choices"][0]["message"]["content"].strip()
+    logger.debug("Full Response Content: " + content)
+
+    # Extract the first code from the response
+    code = ""
+    for match in re.finditer(EXTRACT_CODE_PATTERN, content):
+        code = match.group(1).strip()
+        logger.debug("Extracted code: " + code)
+        if code.startswith("python"):
+            code = code[6:].strip()
+        break
+
+    if not code:
+        logger.error("No code found in response")
+        raise ValueError("No code found in response")
+
+    return code
+```
+
+
+Do not:
+- use input() as there is no one that will be providing that input
+- delete any files
+- be evil
