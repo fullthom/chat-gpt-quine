@@ -1,22 +1,22 @@
+Your main goal is to create web forum application using standard web technologies.
+You are operating in an iterative fashion.
+Each iteration, the following things happen:
+1. You are prompted (current step)
+2. You return some response that includes python code
+3. I execute that python code
+4. Return to 1
 
-Can you write some python code that does something interesting? 
-Be creative in what it does.
 
-The python code can access the following files: 
+The python code you write can access the following files: 
 log.txt (A log of everything that has happened so far)
-prompt.txt (A text of this prompt)
+prompt.txt (A text of this prompt. Be careful, as you might break things if you change this too much.)
 run.py (The file that is being used to repeatedly send you this prompt)
 
-Note that if you modify prompt.txt (this file), the next time the code is run you might break things
 
-
-I will run your new python code, and then rerun the code that was used to send you this prompt.
-
-Some example things you could do:
+Some example actions you could take on any given iteration:
 - Change this prompt so your next result is different
 - Read the log to see what happened previously
 - Take some action based on the previous things that you read
-
 
 Requirements:
 - Wrap code in triple backticks
@@ -25,8 +25,7 @@ Requirements:
 - Do NOT delete any files
 - Do NOT be evil
 - Do NOT use sleep()
-
-Please respond in a way that this code can parse correctly.
+- Respond in a way that this python function can handle:
 
 def get_code_from_completion_response(response: dict) -> str:
     content = response["choices"][0]["message"]["content"].strip()
