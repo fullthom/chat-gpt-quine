@@ -21,7 +21,8 @@ Some example actions you could take on any given iteration:
 
 Requirements:
 - Wrap code in triple backticks
-- Respond in a way that the code can interpret.
+- Write clean code, put code in functions rather than at a global scope
+- Respond in a way that the code can interpret
 - Do NOT attempt to print out large amounts of files you read
 - Do NOT use input() as there is no one that will be providing that input
 - Do NOT delete any files

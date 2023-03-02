@@ -92,10 +92,12 @@ def run():
             chunks = old.split(DELIMITER)
             f2.write(
                 chunks[0] + 
+                DELIMITER +
                 chunks[1] + 
                 "\n" + 
                 code + 
                 "\n" + 
+                DELIMITER + 
                 chunks[2]
             )
 
