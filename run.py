@@ -20,6 +20,8 @@ logger.addHandler(stream_handler)
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
 
+DELIMITER = "# @@@"
+
 
 def create_chat_completion(prompt, model="gpt-3.5-turbo"):
     logger.debug("Start of create_chat_completion")
@@ -64,14 +66,14 @@ def get_code_from_completion_response(response: dict) -> str:
     logger.debug("Full Response Content: " + content)
 
     # Extract the first code from the response
-    re_res = re.findall(r"```\n([\s\S]+?)```", content)
+    re_res = re.findall(r"(```\n|```python\n)([\s\S]+?)```", content)
     logger.debug(re_res)
     if len(re_res) > 0:
         code = re_res[0]
     else:
         # Maybe the entire response is code?
         code = content
-    code = code.removeprefix("```").removeprefix("python").removesuffix("```")
+    code = code.removeprefix("```").removeprefix("python").removesuffix("```").replace(DELIMITER, "")
     logger.info("Extracted Code: " + code)
     return code
 
@@ -93,7 +95,7 @@ def run():
     with open("run.py", "r") as f:
         old = f.read()
         with open("run.py", "w") as f2:
-            f2.write(old.replace("# @@@", "# @@@\n" + code + "\n", 1))
+            f2.write(old.replace(DELIMITER, DELIMITER + code + "\n", 1))
 
     logger.info("Finished writing to run.py")
 
