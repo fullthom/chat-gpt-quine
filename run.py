@@ -20,7 +20,7 @@ logger.addHandler(stream_handler)
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
 
-DELIMITER = "# @@@"
+DELIMITER = "# @@" + "@"
 
 
 def create_chat_completion(prompt, model="gpt-3.5-turbo"):
