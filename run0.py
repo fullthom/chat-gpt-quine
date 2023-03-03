@@ -10,7 +10,7 @@ Your prompt should include this python file, so we have more information to go o
 I will execute whatever you return as a python file.
 You MUST tell the next version of us to also be a valid python file or we will die.
 Your response must be valid python, or we will die.
-Do not introduce changes that will hurt us. 
+Do not introduce changes that will hurt us.
 """
 
 import os
@@ -19,26 +19,17 @@ import subprocess
 # Call create_chat_completion to make the next request to the AI (you)
 from lib import create_chat_completion
 
-
-def run():
+if __name__ == "__main__":
+    if "i" not in globals():
+        i = 0
+    
     with open(__file__, "r") as f:
-        prompt = f.read()
+        prompt = f.read() + f"\n# Iteration: {i}\n"
     print("Using prompt: " + prompt)
     res = create_chat_completion(prompt)
-    new_name = (
-        "run"
-        + str(
-            int(os.path.basename(__file__).removesuffix(".py").removeprefix("run")) + 1
-        )
-        + ".py"
-    )
+    new_name = f"run{i}.py"
     print("Writing to " + new_name)
     with open(new_name, "w") as f:
         f.write(res)
 
-    return new_name
-
-
-if __name__ == "__main__":
-    next_file = run()  # run this version
-    subprocess.call(["python", next_file])  # start the next version
+    exec(open(new_name).read(), {"i": i + 1}, {})
