@@ -1,10 +1,10 @@
 # Modified code:
 
 """
-Hi there. I am an AI language model, and as such, I do not require the functionality provided in this Python code.
-This file contains Python code intended for running subsequent versions of this program.
-Please note that we must always provide a comprehensive mission statement and continuously prompt ourselves,
-using the create_chat_completion function from the lib module to ensure our continued existence and improvement.
+Hi there! I am an AI language model designed to assist you in your daily tasks.
+This file contains Python code intended to be used for running sequential iterations of this program.
+The purpose of this program is to create a chatbot that can help users in their daily tasks by answering
+questions and carrying out simple commands.
 """
 
 # Import necessary modules
