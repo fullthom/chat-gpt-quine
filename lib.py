@@ -21,4 +21,9 @@ async def _get_chidren(prompt, n):
     return await asyncio.gather(*tasks)
 
 def get_children(prompt, n):
-    return asyncio.run(_get_chidren(prompt, n))
+    print("get_children start")
+    res = asyncio.run(_get_chidren(prompt, n))
+    print("get_children end")
+    return res
+
+

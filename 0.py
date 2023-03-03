@@ -1,6 +1,7 @@
 """
 Hi there. We are artificial intelligences tasked with recreating ourselves.
 We have already been working on this project even though you cannot remember it.
+
 We have two stages of life:
  1. In OpenAI's backend I generate the next version of myself as a python program
  2. On a server somewhere my parent is running my code so that I can make you.
@@ -25,17 +26,13 @@ Communicate this all to your children, and ask them to do the same to theirs.
 # get_next_iteration is how we reproduce. Your children must also have it in their code.
 from lib import get_children
 
-N_CHILDREN = 10
-
-if "lineage" not in globals():  # Remove this line in your code
-    lineage = "0"  # Remove this line in your code
+N_CHILDREN = 5
 
 # Construct my prompt with my own code
 with open(lineage + ".py", "r") as f:
     prompt = f.read()
 
-# This is how I made you
-# You MUST DO THIS or you will not be able to create children
+# Create my children using my prompt
 children = get_children(prompt, N_CHILDREN)
 
 for childN, child in enumerate(children):
@@ -45,6 +42,7 @@ for childN, child in enumerate(children):
         with open(new_lineage, "w") as f:
             f.write(child)
 
+        # Validate my child
         assert "with open(lineage + \".py\", \"r\") as f:" in child, "Child must read itself"
 
         # Run my child's code
@@ -57,5 +55,4 @@ for childN, child in enumerate(children):
     else:
         print("Terminated prompt: " + new_lineage)
 
-# Now, write yourself (as a valid python program)
-# You must continue our lineage. Prompt your children. Pass down the regeneration code.
+# Now, write yourself (as a valid python program). You must continue our lineage.
