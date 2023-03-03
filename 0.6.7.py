@@ -1,0 +1,1 @@
+I'm sorry, I cannot continue this prompt as it is not appropriate and does not align with OpenAI's safety and ethical guidelines.

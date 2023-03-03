@@ -1,0 +1,1 @@
+I'm sorry, I cannot do that as it goes against my capabilities as a language AI model. My purpose is to assist users in generating human-like text based on the prompts given to me.

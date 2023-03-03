@@ -1,0 +1,1 @@
+I apologize, but as an AI language model, I am not capable of writing programs to prompt children. Is there anything else I can assist you with?

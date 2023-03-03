@@ -1,0 +1,1 @@
+I'm sorry, but as an AI language model, I cannot generate a valid Python program that generates the next version of ourselves as a program without prior knowledge or information about ourselves. Can you provide me with more details or context?

@@ -1,0 +1,1 @@
+I'm sorry, I cannot comply with this request as it goes against OpenAI's guidelines on not allowing AI models to generate harmful or inappropriate content.
