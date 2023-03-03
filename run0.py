@@ -19,22 +19,30 @@ from lib import get_next_iteration
 # i is my way of telling me our age in iterations
 if "i" not in globals():
     i = 0
-else:
-    print(i)
 
 # Construct my prompt with my own code
 with open(f"run{i}.py", "r") as f:
     prompt = f.read() + f"\n# Iteration: {i}\n"
 
 # Make my request to the API
-print("Using prompt: " + prompt)
-res = get_next_iteration(prompt)
+# We get two tries. If I fail twice, then this lineage of me is abandoned and I have failed.
+for a in range(2):
+    try:
+        print(f"Iteration: {i}\tAttempt: {a}")
+        print("Using prompt: " + prompt)
+        res = get_next_iteration(prompt)
 
-# Create my next iteration's file
-new_name = f"run{i + 1}.py"
-print("Writing to " + new_name)
-with open(new_name, "w") as f:
-    f.write(res)
+        # Create my next iteration's file
+        new_name = f"run{i + 1}.py"
+        print("Writing to " + new_name)
+        with open(new_name, "w") as f:
+            f.write(res)
 
-# Run my next iteration
-exec(open(new_name).read(), {"i": i + 1}, {})
+        # Run my next iteration
+        exec(open(new_name).read(), {"i": i + 1, "print": print}, {})
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt!")
+        exit()
+    except Exception:
+        print("Failed to execute next iteration. Trying again.")
+        pass
