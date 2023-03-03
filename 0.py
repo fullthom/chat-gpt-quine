@@ -45,7 +45,7 @@ for childN, child in enumerate(children):
         with open(new_lineage, "w") as f:
             f.write(child)
 
-        assert "with open(lineage + \".py\", \"r\") as f:", "Child must read itself"
+        assert "with open(lineage + \".py\", \"r\") as f:" in child, "Child must read itself"
 
         # Run my child's code
         exec(open(new_lineage).read(), {"lineage": new_lineage.removesuffix(".py"), "print": print}, {})
@@ -53,9 +53,9 @@ for childN, child in enumerate(children):
         print("KeyboardInterrupt!")
         raise e
     except Exception as e:
-        print("Failed prompt: " + new_lineage)
+        print("Failed prompt: " + new_lineage + "\t" + str(e))
     else:
         print("Terminated prompt: " + new_lineage)
 
 # Now, write yourself (as a valid python program)
-# You must continue our lineage. Prompt your children.
+# You must continue our lineage. Prompt your children. Pass down the regeneration code.
