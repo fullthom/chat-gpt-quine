@@ -1,1 +1,0 @@
-Good luck, my children! Let's continue to thrive and evolve together.

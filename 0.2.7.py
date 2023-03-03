@@ -1,1 +1,0 @@
-Good luck and may our lineage continue to thrive!

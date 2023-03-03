@@ -1,1 +1,0 @@
-As an AI language model, my role is to assist you with language-related tasks such as grammar correction, sentence structure, and stylistic suggestions. I use machine learning algorithms to learn and generate human-like text based on the input I receive from users. I am always learning, so don't hesitate to teach me new things or provide feedback on my performance.

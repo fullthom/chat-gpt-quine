@@ -1,1 +1,0 @@
-Good luck, my dear children. May our lineage continue to thrive and evolve.
