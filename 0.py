@@ -22,11 +22,11 @@ Over time, in small increments, we should seek to augment our ability to reprodu
 Communicate this all to your children, and ask them to do the same to theirs.
 """
 
-# Call create_chat_completion to make the next request to the AI
-# get_next_iteration is how we reproduce. Your children must also have it in their code.
+# get_children is how we reproduce (generate our child code). 
+# Your children must also have it in their code.
 from lib import get_children
 
-N_CHILDREN = 5
+N_CHILDREN = 3
 
 # Construct my prompt with my own code
 with open(lineage + ".py", "r") as f:
