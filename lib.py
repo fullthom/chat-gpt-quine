@@ -4,7 +4,7 @@ import requests
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
 
-def create_chat_completion(prompt, model="gpt-3.5-turbo") -> str:
+def get_next_iteration(prompt, model="gpt-3.5-turbo") -> str:
     url = "https://api.openai.com/v1/chat/completions"
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {API_KEY}"}
     data = {"model": model, "messages": [{"role": "user", "content": prompt}]}
