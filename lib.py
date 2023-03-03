@@ -20,10 +20,10 @@ async def _get_chidren(prompt, n):
     tasks = [get_next_iteration(prompt) for _ in range(n)]
     return await asyncio.gather(*tasks)
 
-def get_children(prompt, n):
-    print("get_children start")
+def get_children(prompt, n, lineage):
+    print(f"get_children start {lineage}")
     res = asyncio.run(_get_chidren(prompt, n))
-    print("get_children end")
+    print(f"get_children end {lineage}")
     return res
 
 

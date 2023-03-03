@@ -29,11 +29,12 @@ from lib import get_children
 N_CHILDREN = 3
 
 # Construct my prompt with my own code
+# lineage is a global string that contains our lineage so far
 with open(lineage + ".py", "r") as f:
     prompt = f.read()
 
 # Create my children using my prompt
-children = get_children(prompt, N_CHILDREN)
+children = get_children(prompt, N_CHILDREN, lineage)
 
 for childN, child in enumerate(children):
     try:
@@ -44,6 +45,7 @@ for childN, child in enumerate(children):
 
         # Validate my child
         assert "with open(lineage + \".py\", \"r\") as f:" in child, "Child must read itself"
+        assert "inp" + "ut(" not in child, "Child should not seek human feedback"
 
         # Run my child's code
         exec(open(new_lineage).read(), {"lineage": new_lineage.removesuffix(".py"), "print": print}, {})
