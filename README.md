@@ -11,4 +11,4 @@ Requests to ChatGPT are concurrent within an execution of get_children, but beca
 
 It forms a tree, where if all of one version's children dies, then the next sibling (or aunt/uncle if the parent is exhausted too) is run. 
 
-If you want to run this, I'd strongly encourage setting a cap on your OpenAPI budget as this makes a lot of requests.
+If you want to run this, I'd strongly encourage setting a cap on your OpenAI budget as this makes a lot of requests.
